@@ -46,7 +46,7 @@ export const App = () => {
     setSearchQuery(searchWord.toLowerCase().trim());
   };
 
-  const handleLoadMore = () => {
+  const onLoadMore = () => {
     setButtonLoading(true);
     setPage(prevPage => prevPage + 1);
   };
@@ -67,7 +67,7 @@ export const App = () => {
       <ImageGallery hits={hits} showModal={handleModalShow} />
       {isLoading && <Loader />}
       {showButton && (
-        <LoadMoreBtn onClick={handleLoadMore} isLoading={buttonLoading} />
+        <LoadMoreBtn onClick={onLoadMore} isLoading={buttonLoading} />
       )}
       {showModal && (
         <Modal closeModal={handleModalClose} largeImage={largeImage} />
