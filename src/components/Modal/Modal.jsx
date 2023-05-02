@@ -1,39 +1,24 @@
 import PropTypes from 'prop-types';
 import { createPortal } from 'react-dom';
-import { useEffect, useCallback } from 'react';
+import { useEffect } from 'react';
 import { ModalOverlay, ModalContentWindow } from './Modal.styled';
 
 const modalRoot = document.querySelector('#modal-root');
 
 export const Modal = ({ closeModal, largeImage }) => {
-  const closeModalOnEsc = useCallback(
-    (event) => {
+  useEffect(() => {
+    const closeModalOnEsc = event => {
       if (event.code === 'Escape') {
         closeModal();
       }
-    },
-    [closeModal]
-  );
-
-  const closeModalOnClickBackdrop = useCallback(
-    (event) => {
-      if (event.target === event.currentTarget) {
-        closeModal();
-      }
-    },
-    [closeModal]
-  );
-
-  useEffect(() => {
-    window.addEventListener('keydown', closeModalOnEsc);
-
-    return () => {
-      window.removeEventListener('keydown', closeModalOnEsc);
     };
-  }, [closeModalOnEsc]);
+    document.addEventListener('keydown', closeModalOnEsc);
+
+    return () => document.removeEventListener('keydown', closeModalOnEsc);
+  }, [closeModal]);
 
   return createPortal(
-    <ModalOverlay onClick={closeModalOnClickBackdrop}>
+    <ModalOverlay onClick={closeModal}>
       <ModalContentWindow>
         <img src={largeImage} alt="tag" />
       </ModalContentWindow>

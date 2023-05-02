@@ -12,7 +12,6 @@ export const App = () => {
   const [hits, setHits] = useState([]);
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
-  const [buttonLoading, setButtonLoading] = useState(false);
   const [showButton, setShowButton] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [largeImage, setLargeImage] = useState('');
@@ -32,7 +31,6 @@ export const App = () => {
         setShowButton(page < Math.ceil(data.totalHits / 12));
       })
       .catch(err => {
-        console.log(err);
         alert('Error');
       })
       .finally(() => {
@@ -47,7 +45,6 @@ export const App = () => {
   };
 
   const onLoadMore = () => {
-    setButtonLoading(true);
     setPage(prevPage => prevPage + 1);
   };
 
@@ -67,7 +64,7 @@ export const App = () => {
       <ImageGallery hits={hits} showModal={handleModalShow} />
       {isLoading && <Loader />}
       {showButton && (
-        <LoadMoreBtn onClick={onLoadMore} isLoading={buttonLoading} />
+        <LoadMoreBtn onClick={onLoadMore} isLoading={showButton} />
       )}
       {showModal && (
         <Modal closeModal={handleModalClose} largeImage={largeImage} />
